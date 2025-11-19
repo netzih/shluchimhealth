@@ -1,7 +1,10 @@
 # Enable URL Rewriting
 <IfModule mod_rewrite.c>
     RewriteEngine On
-    RewriteBase /
+    # IMPORTANT: Update this to match your installation directory
+    # For root installation: RewriteBase /
+    # For subdirectory: RewriteBase /subdirectory/
+    RewriteBase /health/test/
 
     # Redirect to HTTPS (optional - uncomment if you have SSL)
     # RewriteCond %{HTTPS} off
