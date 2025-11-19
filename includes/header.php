@@ -51,7 +51,7 @@
                         $menuPages = db()->fetchAll('SELECT * FROM pages WHERE show_in_menu = 1 ORDER BY menu_order ASC, title ASC');
                         foreach ($menuPages as $page):
                         ?>
-                            <li><a href="<?php echo BASE_URL; ?>/page/<?php echo $page['slug']; ?>"><?php echo escape($page['title']); ?></a></li>
+                            <li><a href="<?php echo BASE_URL; ?>/<?php echo $page['slug']; ?>"><?php echo escape($page['title']); ?></a></li>
                         <?php endforeach; ?>
                     </ul>
                 </nav>

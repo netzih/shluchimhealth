@@ -21,10 +21,14 @@
     # Blog post pages: /blog/slug -> post.php?slug=slug
     RewriteRule ^blog/([a-zA-Z0-9-]+)/?$ post.php?slug=$1 [L,QSA]
 
-    # Static pages: /page/slug -> page.php?slug=slug
-    RewriteRule ^page/([a-zA-Z0-9-]+)/?$ page.php?slug=$1 [L,QSA]
+    # Static pages: /slug -> page.php?slug=slug (catch-all for pages)
+    # This must come AFTER specific routes and check file doesn't exist
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_URI} !^/(admin|assets|uploads)/
+    RewriteRule ^([a-zA-Z0-9-]+)/?$ page.php?slug=$1 [L,QSA]
 
-    # 404 handler - catch everything that's not a file or directory
+    # 404 handler - catch everything else
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteRule . 404.php [L]

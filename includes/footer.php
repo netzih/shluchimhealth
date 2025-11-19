@@ -24,7 +24,7 @@
                         $footerPages = db()->fetchAll("SELECT * FROM pages WHERE slug IN ('privacy-policy', 'affiliate-disclosure', 'terms-of-service') ORDER BY title ASC");
                         foreach ($footerPages as $page):
                         ?>
-                            <li><a href="<?php echo BASE_URL; ?>/page/<?php echo $page['slug']; ?>"><?php echo escape($page['title']); ?></a></li>
+                            <li><a href="<?php echo BASE_URL; ?>/<?php echo $page['slug']; ?>"><?php echo escape($page['title']); ?></a></li>
                         <?php endforeach; ?>
                     </ul>
                 </div>
