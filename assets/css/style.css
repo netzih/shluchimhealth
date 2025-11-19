@@ -888,10 +888,17 @@ section h2::after {
     grid-template-columns: 1fr 1fr;
     gap: 2rem;
     background: var(--white);
-    border-radius: var(--border-radius);
+    border-radius: var(--border-radius-lg);
     overflow: hidden;
-    box-shadow: var(--box-shadow);
+    box-shadow: var(--shadow-lg);
     margin-bottom: 3rem;
+    border: 1px solid var(--border-color);
+    transition: var(--transition-base);
+}
+
+.featured-post:hover {
+    box-shadow: var(--shadow-xl);
+    transform: translateY(-2px);
 }
 
 .featured-image {
@@ -941,10 +948,16 @@ section h2::after {
 
 .sidebar-widget {
     background: var(--white);
-    padding: 1.5rem;
-    border-radius: var(--border-radius);
-    box-shadow: var(--box-shadow);
+    padding: 2rem;
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-md);
     margin-bottom: 2rem;
+    border: 1px solid var(--border-color);
+    transition: var(--transition-base);
+}
+
+.sidebar-widget:hover {
+    box-shadow: var(--shadow-lg);
 }
 
 .sidebar-widget h3 {
@@ -1341,8 +1354,9 @@ section h2::after {
         grid-template-columns: 1fr;
     }
 
-    .products-sidebar {
-        order: -1;
+    .products-sidebar,
+    .blog-sidebar {
+        order: 2;
     }
 
     .sidebar-widget {
