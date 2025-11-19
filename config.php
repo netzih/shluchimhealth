@@ -12,26 +12,32 @@ if (php_sapi_name() === 'cli') {
     define('SITE_PATH', '');
     define('BASE_URL', SITE_URL);
 } else {
-    // Web request - calculate base URL from config.php location
-    $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
-    define('SITE_URL', $protocol . '://' . $_SERVER['HTTP_HOST']);
+    // Web request - calculate base URL properly
+    $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' ||
+                 (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https'))
+                 ? 'https' : 'http';
 
-    // Get the directory where config.php is located (application root)
-    $configDir = dirname($_SERVER['SCRIPT_FILENAME']);
-    $docRoot = $_SERVER['DOCUMENT_ROOT'];
+    $host = $_SERVER['HTTP_HOST'] ?? 'localhost';
+    define('SITE_URL', $protocol . '://' . $host);
 
-    // Find config.php relative to document root
-    $scriptPath = str_replace('\\', '/', $_SERVER['SCRIPT_FILENAME']);
-    $documentRoot = str_replace('\\', '/', $_SERVER['DOCUMENT_ROOT']);
+    // Calculate site path relative to document root
+    // Use __DIR__ (where config.php is) as the application root
+    $documentRoot = str_replace('\\', '/', $_SERVER['DOCUMENT_ROOT'] ?? '');
+    $configDir = str_replace('\\', '/', __DIR__);
 
-    // Get the directory of the currently executing script
-    $currentDir = dirname($scriptPath);
+    // Remove document root from config dir to get relative path
+    $sitePath = '';
+    if (!empty($documentRoot) && strpos($configDir, $documentRoot) === 0) {
+        $sitePath = substr($configDir, strlen($documentRoot));
+    }
 
-    // Find config.php by going up from current location
-    $configPath = __DIR__;
-    $relativePath = str_replace($documentRoot, '', $configPath);
+    // Ensure path starts with / and doesn't end with /
+    $sitePath = '/' . trim($sitePath, '/');
+    if ($sitePath === '/') {
+        $sitePath = '';
+    }
 
-    define('SITE_PATH', $relativePath);
+    define('SITE_PATH', $sitePath);
     define('BASE_URL', SITE_URL . SITE_PATH);
 }
 
