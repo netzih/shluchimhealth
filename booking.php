@@ -5,7 +5,8 @@ require_once 'functions.php';
 
 // Check if Cal.com is configured
 $calcomUsername = getSetting('calcom_username');
-$calcomEventType = getSetting('calcom_event_type') ?: '30min';
+$calcomNewClientEvent = getSetting('calcom_event_type') ?: '30min';
+$calcomFollowupEvent = getSetting('calcom_followup_event_type') ?: 'follow-up';
 
 // SEO
 $pageTitle = 'Book a Consultation';
@@ -58,14 +59,45 @@ include 'includes/header.php';
                 </div>
 
                 <div class="booking-calendar">
-                    <h2>Choose Your Time</h2>
+                    <h2>Choose Your Consultation Type</h2>
 
-                    <!-- Cal.com Inline Embed -->
-                    <div class="cal-inline-container">
+                    <!-- Booking Type Selector -->
+                    <div class="booking-tabs">
+                        <button class="booking-tab active" onclick="switchTab('new-client')">
+                            <div class="tab-icon">🌟</div>
+                            <div class="tab-title">New Client</div>
+                            <div class="tab-desc">First-time consultation</div>
+                        </button>
+                        <button class="booking-tab" onclick="switchTab('follow-up')">
+                            <div class="tab-icon">🔄</div>
+                            <div class="tab-title">Follow-Up</div>
+                            <div class="tab-desc">Returning client check-in</div>
+                        </button>
+                    </div>
+
+                    <!-- New Client Calendar -->
+                    <div id="new-client-calendar" class="calendar-container active">
+                        <div class="calendar-header">
+                            <h3>New Client Consultation</h3>
+                            <p>Perfect for first-time clients ready to start their wellness journey</p>
+                        </div>
                         <div
                             class="cal-inline"
-                            data-cal-link="<?php echo escape($calcomUsername); ?>/<?php echo escape($calcomEventType); ?>"
-                            data-cal-config='{"layout":"month_view","theme":"light"}'>
+                            id="cal-new-client"
+                            style="width:100%;height:600px;overflow:scroll">
+                        </div>
+                    </div>
+
+                    <!-- Follow-Up Calendar -->
+                    <div id="follow-up-calendar" class="calendar-container">
+                        <div class="calendar-header">
+                            <h3>Follow-Up Consultation</h3>
+                            <p>For returning clients to review progress and adjust recommendations</p>
+                        </div>
+                        <div
+                            class="cal-inline"
+                            id="cal-follow-up"
+                            style="width:100%;height:600px;overflow:scroll">
                         </div>
                     </div>
                 </div>
@@ -75,8 +107,14 @@ include 'includes/header.php';
                 <h2>Frequently Asked Questions</h2>
 
                 <div class="faq-item">
-                    <h3>How long is a consultation?</h3>
-                    <p>Standard consultations are 30 minutes, giving us enough time to discuss your health goals and create a personalized plan.</p>
+                    <h3>What's the difference between New Client and Follow-Up?</h3>
+                    <p><strong>New Client:</strong> Comprehensive initial consultation where we discuss your health history, current concerns, and create a personalized plan.<br>
+                    <strong>Follow-Up:</strong> Shorter session for existing clients to review progress, discuss adjustments, and answer questions.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>How long is each consultation?</h3>
+                    <p>Consultation lengths vary by type. You'll see the duration when selecting your appointment time.</p>
                 </div>
 
                 <div class="faq-item">
@@ -90,8 +128,8 @@ include 'includes/header.php';
                 </div>
 
                 <div class="faq-item">
-                    <h3>Can I schedule a follow-up?</h3>
-                    <p>Absolutely! Follow-up consultations help us track your progress and make adjustments as needed. You can book follow-ups at any time.</p>
+                    <h3>Can I reschedule or cancel?</h3>
+                    <p>Yes, you can reschedule or cancel your appointment using the link in your confirmation email.</p>
                 </div>
             </div>
 
@@ -199,8 +237,73 @@ include 'includes/header.php';
     color: #2d3748;
 }
 
-.cal-inline-container {
-    min-height: 600px;
+.booking-tabs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.booking-tab {
+    background: #f7fafc;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.booking-tab:hover {
+    border-color: #2563eb;
+    background: #eff6ff;
+}
+
+.booking-tab.active {
+    background: #2563eb;
+    border-color: #2563eb;
+    color: white;
+}
+
+.tab-icon {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.tab-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+
+.tab-desc {
+    font-size: 0.875rem;
+    opacity: 0.8;
+}
+
+.calendar-container {
+    display: none;
+}
+
+.calendar-container.active {
+    display: block;
+}
+
+.calendar-header {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+.calendar-header h3 {
+    font-size: 1.25rem;
+    color: #2d3748;
+    margin-bottom: 0.5rem;
+}
+
+.calendar-header p {
+    color: #4a5568;
+    margin: 0;
 }
 
 .booking-faq {
@@ -276,8 +379,8 @@ include 'includes/header.php';
 }
 </style>
 
-<!-- Cal.com Embed Script -->
 <script>
+// Cal.com embed initialization
 (function (C, A, L) {
   let p = function (a, ar) { a.q.push(ar); };
   let d = C.document;
@@ -303,12 +406,42 @@ include 'includes/header.php';
 
 Cal("init", {origin:"https://cal.com"});
 
-// Optional: UI settings
-Cal("ui", {
-  "styles": {"branding": {"brandColor": "#2563eb"}},
-  "hideEventTypeDetails": false,
-  "layout": "month_view"
+// Initialize both calendars
+Cal("inline", {
+  elementOrSelector: "#cal-new-client",
+  calLink: "<?php echo escape($calcomUsername); ?>/<?php echo escape($calcomNewClientEvent); ?>",
+  layout: "month_view",
+  config: {
+    theme: "light"
+  }
 });
+
+Cal("inline", {
+  elementOrSelector: "#cal-follow-up",
+  calLink: "<?php echo escape($calcomUsername); ?>/<?php echo escape($calcomFollowupEvent); ?>",
+  layout: "month_view",
+  config: {
+    theme: "light"
+  }
+});
+
+// Tab switching
+function switchTab(type) {
+    // Update tabs
+    const tabs = document.querySelectorAll('.booking-tab');
+    tabs.forEach(tab => tab.classList.remove('active'));
+    event.target.closest('.booking-tab').classList.add('active');
+
+    // Update calendars
+    document.getElementById('new-client-calendar').classList.remove('active');
+    document.getElementById('follow-up-calendar').classList.remove('active');
+
+    if (type === 'new-client') {
+        document.getElementById('new-client-calendar').classList.add('active');
+    } else {
+        document.getElementById('follow-up-calendar').classList.add('active');
+    }
+}
 </script>
 
 <?php include 'includes/footer.php'; ?>

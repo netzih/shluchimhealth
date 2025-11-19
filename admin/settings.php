@@ -19,6 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'tinymce_api_key',
         'calcom_username',
         'calcom_event_type',
+        'calcom_followup_event_type',
         'enable_booking_widget'
     ];
 
@@ -108,9 +109,15 @@ include 'header.php';
             </div>
 
             <div class="form-group">
-                <label for="calcom_event_type">Cal.com Event Type</label>
-                <input type="text" id="calcom_event_type" name="calcom_event_type" value="<?php echo escape(getSetting('calcom_event_type')); ?>" class="form-control" placeholder="30min">
-                <small>Your event slug (e.g., "30min", "consultation", "follow-up")</small>
+                <label for="calcom_event_type">New Client Event Type</label>
+                <input type="text" id="calcom_event_type" name="calcom_event_type" value="<?php echo escape(getSetting('calcom_event_type')); ?>" class="form-control" placeholder="consultation">
+                <small>Event slug for first-time clients (e.g., "consultation", "initial-consult")</small>
+            </div>
+
+            <div class="form-group">
+                <label for="calcom_followup_event_type">Follow-up Event Type</label>
+                <input type="text" id="calcom_followup_event_type" name="calcom_followup_event_type" value="<?php echo escape(getSetting('calcom_followup_event_type')); ?>" class="form-control" placeholder="follow-up">
+                <small>Event slug for returning clients (e.g., "follow-up", "check-in")</small>
             </div>
 
             <div class="form-group">
