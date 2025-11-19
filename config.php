@@ -21,17 +21,21 @@ if (php_sapi_name() === 'cli') {
     define('SITE_URL', $protocol . '://' . $host);
 
     // Calculate site path relative to document root
-    // Use __DIR__ (where config.php is) as the application root
-    $documentRoot = str_replace('\\', '/', $_SERVER['DOCUMENT_ROOT'] ?? '');
-    $configDir = str_replace('\\', '/', __DIR__);
-
-    // Remove document root from config dir to get relative path
+    // For most installations at domain root, SITE_PATH should be empty
     $sitePath = '';
-    if (!empty($documentRoot) && strpos($configDir, $documentRoot) === 0) {
-        $sitePath = substr($configDir, strlen($documentRoot));
+
+    // Try to calculate from DOCUMENT_ROOT if available
+    if (!empty($_SERVER['DOCUMENT_ROOT'])) {
+        $documentRoot = str_replace('\\', '/', $_SERVER['DOCUMENT_ROOT']);
+        $configDir = str_replace('\\', '/', __DIR__);
+
+        // If config is in a subdirectory of document root
+        if (strpos($configDir, $documentRoot) === 0) {
+            $sitePath = substr($configDir, strlen($documentRoot));
+        }
     }
 
-    // Ensure path starts with / and doesn't end with /
+    // Clean up the path
     $sitePath = '/' . trim($sitePath, '/');
     if ($sitePath === '/') {
         $sitePath = '';
