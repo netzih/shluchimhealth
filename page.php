@@ -3,10 +3,18 @@ require_once 'config.php';
 require_once 'database.php';
 require_once 'functions.php';
 
+// DEBUG: Log what we're receiving
+error_log("PAGE.PHP - REQUEST_URI: " . ($_SERVER['REQUEST_URI'] ?? 'N/A'));
+error_log("PAGE.PHP - QUERY_STRING: " . ($_SERVER['QUERY_STRING'] ?? 'N/A'));
+error_log("PAGE.PHP - GET params: " . print_r($_GET, true));
+
 // Get slug from URL
 $slug = $_GET['slug'] ?? '';
 
+error_log("PAGE.PHP - Slug: " . $slug);
+
 if (empty($slug)) {
+    error_log("PAGE.PHP - Empty slug, redirecting to 404");
     header('HTTP/1.0 404 Not Found');
     include '404.php';
     exit;
