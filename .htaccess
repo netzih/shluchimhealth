@@ -4,7 +4,7 @@
     # IMPORTANT: Update this to match your installation directory
     # For root installation: RewriteBase /
     # For subdirectory: RewriteBase /subdirectory/
-    RewriteBase /health/test/
+    RewriteBase /
 
     # Redirect to HTTPS (optional - uncomment if you have SSL)
     # RewriteCond %{HTTPS} off
