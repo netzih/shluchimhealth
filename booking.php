@@ -422,13 +422,13 @@ include 'includes/header.php';
 
 Cal("init", {origin:"https://cal.com"});
 
-// Make both calendars temporarily visible for initialization
-document.getElementById('new-client-calendar').style.position = 'relative';
-document.getElementById('new-client-calendar').style.opacity = '1';
-document.getElementById('follow-up-calendar').style.position = 'relative';
-document.getElementById('follow-up-calendar').style.opacity = '1';
+// Track which calendars have been initialized
+let followUpInitialized = false;
 
-// Initialize both calendars on page load
+// Initialize new client calendar (default view)
+console.log('Initializing New Client calendar...');
+console.log('Cal.com link: <?php echo escape($calcomUsername); ?>/<?php echo escape($calcomNewClientEvent); ?>');
+
 Cal("inline", {
   elementOrSelector: "#cal-new-client",
   calLink: "<?php echo escape($calcomUsername); ?>/<?php echo escape($calcomNewClientEvent); ?>",
@@ -438,25 +438,39 @@ Cal("inline", {
   }
 });
 
-Cal("inline", {
-  elementOrSelector: "#cal-follow-up",
-  calLink: "<?php echo escape($calcomUsername); ?>/<?php echo escape($calcomFollowupEvent); ?>",
-  layout: "month_view",
-  config: {
-    theme: "light"
-  }
-});
+// Function to initialize follow-up calendar (lazy load)
+function initFollowUpCalendar() {
+    if (followUpInitialized) {
+        console.log('Follow-up calendar already initialized');
+        return;
+    }
 
-// After calendars initialize, hide the follow-up one
-setTimeout(function() {
-    // Hide follow-up calendar (new client is default)
-    const followUp = document.getElementById('follow-up-calendar');
-    followUp.style.position = 'absolute';
-    followUp.style.opacity = '0';
-}, 1000);
+    console.log('Initializing Follow-up calendar...');
+    console.log('Cal.com link: <?php echo escape($calcomUsername); ?>/<?php echo escape($calcomFollowupEvent); ?>');
 
-// Tab switching
+    // Make sure container is visible before initializing
+    const followUpContainer = document.getElementById('follow-up-calendar');
+    followUpContainer.style.position = 'relative';
+    followUpContainer.style.opacity = '1';
+    followUpContainer.style.pointerEvents = 'auto';
+
+    Cal("inline", {
+      elementOrSelector: "#cal-follow-up",
+      calLink: "<?php echo escape($calcomUsername); ?>/<?php echo escape($calcomFollowupEvent); ?>",
+      layout: "month_view",
+      config: {
+        theme: "light"
+      }
+    });
+
+    followUpInitialized = true;
+    console.log('Follow-up calendar initialization complete');
+}
+
+// Tab switching with lazy loading
 function switchTab(type) {
+    console.log('Switching to tab:', type);
+
     // Update tabs
     const tabs = document.querySelectorAll('.booking-tab');
     tabs.forEach(tab => tab.classList.remove('active'));
@@ -476,6 +490,12 @@ function switchTab(type) {
         followUp.style.opacity = '0';
         followUp.style.pointerEvents = 'none';
     } else {
+        // Initialize follow-up calendar if this is first time showing it
+        if (!followUpInitialized) {
+            console.log('First time showing follow-up, initializing...');
+            initFollowUpCalendar();
+        }
+
         followUp.classList.add('active');
         newClient.classList.remove('active');
         followUp.style.position = 'relative';
