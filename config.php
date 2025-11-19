@@ -5,44 +5,18 @@
 define('DB_FILE', __DIR__ . '/database.db');
 
 // Site configuration
-// Handle both CLI and web contexts
+// HARDCODED for shluchimhealth.com (root installation)
+// Change these values if you move the site
 if (php_sapi_name() === 'cli') {
-    // Command line - use defaults
-    define('SITE_URL', 'http://localhost');
+    // Command line - use defaults for scripts
+    define('SITE_URL', 'https://shluchimhealth.com');
     define('SITE_PATH', '');
     define('BASE_URL', SITE_URL);
 } else {
-    // Web request - calculate base URL properly
-    $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' ||
-                 (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https'))
-                 ? 'https' : 'http';
-
-    $host = $_SERVER['HTTP_HOST'] ?? 'localhost';
-    define('SITE_URL', $protocol . '://' . $host);
-
-    // Calculate site path relative to document root
-    // For most installations at domain root, SITE_PATH should be empty
-    $sitePath = '';
-
-    // Try to calculate from DOCUMENT_ROOT if available
-    if (!empty($_SERVER['DOCUMENT_ROOT'])) {
-        $documentRoot = str_replace('\\', '/', $_SERVER['DOCUMENT_ROOT']);
-        $configDir = str_replace('\\', '/', __DIR__);
-
-        // If config is in a subdirectory of document root
-        if (strpos($configDir, $documentRoot) === 0) {
-            $sitePath = substr($configDir, strlen($documentRoot));
-        }
-    }
-
-    // Clean up the path
-    $sitePath = '/' . trim($sitePath, '/');
-    if ($sitePath === '/') {
-        $sitePath = '';
-    }
-
-    define('SITE_PATH', $sitePath);
-    define('BASE_URL', SITE_URL . SITE_PATH);
+    // Web request - hardcoded values
+    define('SITE_URL', 'https://shluchimhealth.com');
+    define('SITE_PATH', '');
+    define('BASE_URL', 'https://shluchimhealth.com');
 }
 
 // Admin configuration
