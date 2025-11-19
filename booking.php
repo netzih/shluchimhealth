@@ -420,16 +420,21 @@ include 'includes/header.php';
   };
 })(window, "https://app.cal.com/embed/embed.js", "init");
 
-Cal("init", {origin:"https://cal.com"});
+// Initialize Cal.com with separate namespaces for each calendar
+console.log('Initializing Cal.com with namespaces...');
+
+Cal("init", "newclient", {origin:"https://cal.com"});
+Cal("init", "followup", {origin:"https://cal.com"});
 
 // Track which calendars have been initialized
 let followUpInitialized = false;
 
-// Initialize new client calendar (default view)
+// Initialize new client calendar (default view) with namespace
 console.log('Initializing New Client calendar...');
 console.log('Cal.com link: <?php echo escape($calcomUsername); ?>/<?php echo escape($calcomNewClientEvent); ?>');
 
 Cal("inline", {
+  namespace: "newclient",
   elementOrSelector: "#cal-new-client",
   calLink: "<?php echo escape($calcomUsername); ?>/<?php echo escape($calcomNewClientEvent); ?>",
   layout: "month_view",
@@ -438,7 +443,7 @@ Cal("inline", {
   }
 });
 
-// Function to initialize follow-up calendar (lazy load)
+// Function to initialize follow-up calendar with namespace (lazy load)
 function initFollowUpCalendar() {
     if (followUpInitialized) {
         console.log('Follow-up calendar already initialized');
@@ -455,6 +460,7 @@ function initFollowUpCalendar() {
     followUpContainer.style.pointerEvents = 'auto';
 
     Cal("inline", {
+      namespace: "followup",
       elementOrSelector: "#cal-follow-up",
       calLink: "<?php echo escape($calcomUsername); ?>/<?php echo escape($calcomFollowupEvent); ?>",
       layout: "month_view",
