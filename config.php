@@ -5,18 +5,19 @@
 define('DB_FILE', __DIR__ . '/database.db');
 
 // Site configuration
-// HARDCODED for shluchimhealth.com (root installation)
-// Change these values if you move the site
 if (php_sapi_name() === 'cli') {
     // Command line - use defaults for scripts
-    define('SITE_URL', 'https://shluchimhealth.com');
+    define('SITE_URL', 'https://www.shluchimhealth.com');
     define('SITE_PATH', '');
     define('BASE_URL', SITE_URL);
 } else {
-    // Web request - hardcoded values
-    define('SITE_URL', 'https://shluchimhealth.com');
+    // Web request - use actual hostname (supports both www and non-www)
+    $protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ? 'https' : 'https';
+    $host = $_SERVER['HTTP_HOST'] ?? 'www.shluchimhealth.com';
+
+    define('SITE_URL', $protocol . '://' . $host);
     define('SITE_PATH', '');
-    define('BASE_URL', 'https://shluchimhealth.com');
+    define('BASE_URL', SITE_URL);
 }
 
 // Admin configuration
