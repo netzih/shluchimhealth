@@ -3,18 +3,29 @@ require_once 'config.php';
 require_once 'database.php';
 require_once 'functions.php';
 
-// DEBUG: Log what we're receiving
-error_log("PAGE.PHP - REQUEST_URI: " . ($_SERVER['REQUEST_URI'] ?? 'N/A'));
-error_log("PAGE.PHP - QUERY_STRING: " . ($_SERVER['QUERY_STRING'] ?? 'N/A'));
-error_log("PAGE.PHP - GET params: " . print_r($_GET, true));
+// DEBUG MODE - Remove this block when fixed
+$debugMode = true;
+if ($debugMode) {
+    echo "<div style='background: #ffeb3b; padding: 20px; border: 3px solid #f00; margin: 20px;'>";
+    echo "<h2>🔍 PAGE.PHP DEBUG</h2>";
+    echo "<p><strong>REQUEST_URI:</strong> " . htmlspecialchars($_SERVER['REQUEST_URI'] ?? 'N/A') . "</p>";
+    echo "<p><strong>QUERY_STRING:</strong> " . htmlspecialchars($_SERVER['QUERY_STRING'] ?? 'N/A') . "</p>";
+    echo "<p><strong>\$_GET:</strong> <pre>" . htmlspecialchars(print_r($_GET, true)) . "</pre></p>";
+    echo "<p><strong>Slug from \$_GET['slug']:</strong> " . htmlspecialchars($_GET['slug'] ?? 'NOT SET') . "</p>";
+    echo "</div>";
+}
 
 // Get slug from URL
 $slug = $_GET['slug'] ?? '';
 
-error_log("PAGE.PHP - Slug: " . $slug);
-
 if (empty($slug)) {
-    error_log("PAGE.PHP - Empty slug, redirecting to 404");
+    if ($debugMode) {
+        echo "<div style='background: #f00; color: #fff; padding: 20px; margin: 20px;'>";
+        echo "<h2>❌ ERROR: Slug is empty!</h2>";
+        echo "<p>The .htaccess rewrite is NOT passing the slug parameter.</p>";
+        echo "<p>This means when you access /page/about, it's not converting it to page.php?slug=about</p>";
+        echo "</div>";
+    }
     header('HTTP/1.0 404 Not Found');
     include '404.php';
     exit;
