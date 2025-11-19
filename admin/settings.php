@@ -15,7 +15,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'posts_per_page',
         'products_per_page',
         'amazon_tag',
-        'logo_url'
+        'logo_url',
+        'tinymce_api_key'
     ];
 
     foreach ($settings as $key) {
@@ -91,6 +92,16 @@ include 'header.php';
                 <label for="amazon_tag">Amazon Associate Tag</label>
                 <input type="text" id="amazon_tag" name="amazon_tag" value="<?php echo escape(getSetting('amazon_tag')); ?>" class="form-control">
                 <small>Your Amazon Associates tracking ID</small>
+            </div>
+        </div>
+
+        <div class="settings-section">
+            <h2>Editor Settings</h2>
+
+            <div class="form-group">
+                <label for="tinymce_api_key">TinyMCE API Key</label>
+                <input type="text" id="tinymce_api_key" name="tinymce_api_key" value="<?php echo escape(getSetting('tinymce_api_key')); ?>" class="form-control">
+                <small>Get your free API key at <a href="https://www.tiny.cloud/auth/signup/" target="_blank">tiny.cloud/signup</a></small>
             </div>
         </div>
 

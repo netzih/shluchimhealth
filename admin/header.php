@@ -5,7 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo isset($pageTitle) ? escape($pageTitle) . ' - ' : ''; ?>Admin - <?php echo escape(getSetting('site_name')); ?></title>
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>/assets/css/admin.css">
-    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <?php
+    $tinymceKey = getSetting('tinymce_api_key') ?: 'no-api-key';
+    ?>
+    <script src="https://cdn.tiny.cloud/1/<?php echo escape($tinymceKey); ?>/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
 </head>
 <body class="admin-body">
     <nav class="admin-nav">
