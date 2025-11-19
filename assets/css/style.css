@@ -1362,6 +1362,7 @@ section h2::after {
     .products-sidebar,
     .blog-sidebar {
         order: 2;
+        position: static;
     }
 
     .sidebar-widget {
