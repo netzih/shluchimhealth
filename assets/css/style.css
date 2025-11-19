@@ -1356,13 +1356,13 @@ section h2::after {
 
     .products-main,
     .blog-main {
-        order: 1;
+        order: 1 !important;
     }
 
     .products-sidebar,
     .blog-sidebar {
-        order: 2;
-        position: static;
+        order: 2 !important;
+        position: static !important;
     }
 
     .sidebar-widget {
