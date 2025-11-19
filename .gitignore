@@ -1,0 +1,24 @@
+# Database
+database.db
+
+# Uploads
+uploads/*
+!uploads/.gitkeep
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# Editor Files
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# Temporary Files
+*.tmp
+*.bak
