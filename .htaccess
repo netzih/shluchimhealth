@@ -24,11 +24,7 @@
     # Static pages: /page/slug -> page.php?slug=slug
     RewriteRule ^page/([a-zA-Z0-9-]+)/?$ page.php?slug=$1 [L,QSA]
 
-    # Existing files and directories
-    RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteCond %{REQUEST_FILENAME} !-d
-
-    # 404 handler
+    # 404 handler - catch everything that's not a file or directory
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteRule . 404.php [L]
