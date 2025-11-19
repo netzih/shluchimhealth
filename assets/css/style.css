@@ -223,11 +223,14 @@ a:hover {
     line-height: 1.2;
     letter-spacing: -0.03em;
     animation: fadeInUp 0.8s ease-out;
+    color: var(--white);
+    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.15), 0 8px 40px rgba(0, 0, 0, 0.1);
 }
 
 .hero-subtitle {
     font-size: 1.375rem;
     margin-bottom: 2.5rem;
+    color: var(--white);
     opacity: 0.95;
     font-family: var(--font-sans);
     font-weight: 400;
@@ -236,6 +239,7 @@ a:hover {
     margin-right: auto;
     line-height: 1.6;
     animation: fadeInUp 0.8s ease-out 0.2s backwards;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
 }
 
 .hero-cta {
