@@ -1,6 +1,9 @@
 # Enable URL Rewriting
 <IfModule mod_rewrite.c>
     RewriteEngine On
+    # IMPORTANT: Update this to match your installation directory
+    # For root installation: RewriteBase /
+    # For subdirectory: RewriteBase /subdirectory/
     RewriteBase /
 
     # Redirect to HTTPS (optional - uncomment if you have SSL)
@@ -18,14 +21,17 @@
     # Blog post pages: /blog/slug -> post.php?slug=slug
     RewriteRule ^blog/([a-zA-Z0-9-]+)/?$ post.php?slug=$1 [L,QSA]
 
-    # Static pages: /page/slug -> page.php?slug=slug
-    RewriteRule ^page/([a-zA-Z0-9-]+)/?$ page.php?slug=$1 [L,QSA]
+    # Booking page: /booking -> booking.php
+    RewriteRule ^booking/?$ booking.php [L,QSA]
 
-    # Existing files and directories
+    # Static pages: /slug -> page.php?slug=slug (catch-all for pages)
+    # This must come AFTER specific routes and check file doesn't exist
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_URI} !^/(admin|assets|uploads)/
+    RewriteRule ^([a-zA-Z0-9-]+)/?$ page.php?slug=$1 [L,QSA]
 
-    # 404 handler
+    # 404 handler - catch everything else
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteRule . 404.php [L]

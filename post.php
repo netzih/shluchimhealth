@@ -76,6 +76,45 @@ include 'includes/header.php';
             <?php echo $post['content']; ?>
         </div>
 
+        <?php if (getSetting('calcom_username')): ?>
+        <div class="post-cta">
+            <div class="cta-content">
+                <h3>Need Personalized Guidance?</h3>
+                <p>Get expert advice tailored to your unique health goals and needs. Book a one-on-one consultation to discuss supplement recommendations, wellness strategies, and more.</p>
+                <a href="<?php echo BASE_URL; ?>/booking" class="btn btn-primary btn-lg">Schedule a Consultation</a>
+            </div>
+        </div>
+
+        <style>
+        .post-cta {
+            margin: 3rem 0;
+            padding: 3rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .cta-content h3 {
+            color: white;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .cta-content p {
+            color: rgba(255, 255, 255, 0.95);
+            font-size: 1.125rem;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            line-height: 1.6;
+        }
+
+        .btn-lg {
+            padding: 1rem 2rem;
+            font-size: 1.125rem;
+        }
+        </style>
+        <?php endif; ?>
+
         <footer class="post-footer">
             <p class="affiliate-disclaimer">
                 <strong>Affiliate Disclosure:</strong> This post may contain affiliate links.

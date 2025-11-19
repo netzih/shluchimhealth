@@ -53,7 +53,7 @@ include 'header.php';
                         <td><?php echo formatDate($page['created_at'], 'M j, Y'); ?></td>
                         <td class="actions">
                             <a href="page-edit.php?id=<?php echo $page['id']; ?>" class="btn btn-sm">Edit</a>
-                            <a href="<?php echo BASE_URL; ?>/page/<?php echo $page['slug']; ?>" target="_blank" class="btn btn-sm">View</a>
+                            <a href="<?php echo BASE_URL; ?>/<?php echo $page['slug']; ?>" target="_blank" class="btn btn-sm">View</a>
                             <a href="?delete=<?php echo $page['id']; ?>" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">Delete</a>
                         </td>
                     </tr>

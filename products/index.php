@@ -119,12 +119,12 @@ include '../includes/header.php';
 
                                 <div class="product-info">
                                     <span class="product-category"><?php echo escape($product['category']); ?></span>
-                                    <h3><a href="<?php echo BASE_URL; ?>/product/<?php echo $product['slug']; ?>"><?php echo escape($product['title']); ?></a></h3>
+                                    <h3><?php echo escape($product['title']); ?></h3>
                                     <p><?php echo escape(truncate($product['description'], 120)); ?></p>
 
                                     <div class="product-links">
                                         <?php foreach ($urls as $url): ?>
-                                            <a href="<?php echo escape($url['url']); ?>" class="btn btn-sm btn-affiliate" target="_blank" rel="nofollow noopener">
+                                            <a href="<?php echo escape($url['url']); ?>" class="btn btn-sm btn-affiliate" target="_blank" rel="nofollow noopener sponsored">
                                                 <?php echo escape($url['name']); ?>
                                             </a>
                                         <?php endforeach; ?>
