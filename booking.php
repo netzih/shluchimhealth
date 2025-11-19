@@ -75,29 +75,32 @@ include 'includes/header.php';
                         </button>
                     </div>
 
-                    <!-- New Client Calendar -->
-                    <div id="new-client-calendar" class="calendar-container active">
-                        <div class="calendar-header">
-                            <h3>New Client Consultation</h3>
-                            <p>Perfect for first-time clients ready to start their wellness journey</p>
+                    <!-- Calendar Wrapper for positioning -->
+                    <div class="calendars-wrapper">
+                        <!-- New Client Calendar -->
+                        <div id="new-client-calendar" class="calendar-container active">
+                            <div class="calendar-header">
+                                <h3>New Client Consultation</h3>
+                                <p>Perfect for first-time clients ready to start their wellness journey</p>
+                            </div>
+                            <div
+                                class="cal-inline"
+                                id="cal-new-client"
+                                style="width:100%;height:600px;overflow:scroll">
+                            </div>
                         </div>
-                        <div
-                            class="cal-inline"
-                            id="cal-new-client"
-                            style="width:100%;height:600px;overflow:scroll">
-                        </div>
-                    </div>
 
-                    <!-- Follow-Up Calendar -->
-                    <div id="follow-up-calendar" class="calendar-container">
-                        <div class="calendar-header">
-                            <h3>Follow-Up Consultation</h3>
-                            <p>For returning clients to review progress and adjust recommendations</p>
-                        </div>
-                        <div
-                            class="cal-inline"
-                            id="cal-follow-up"
-                            style="width:100%;height:600px;overflow:scroll">
+                        <!-- Follow-Up Calendar -->
+                        <div id="follow-up-calendar" class="calendar-container">
+                            <div class="calendar-header">
+                                <h3>Follow-Up Consultation</h3>
+                                <p>For returning clients to review progress and adjust recommendations</p>
+                            </div>
+                            <div
+                                class="cal-inline"
+                                id="cal-follow-up"
+                                style="width:100%;height:600px;overflow:scroll">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -281,12 +284,25 @@ include 'includes/header.php';
     opacity: 0.8;
 }
 
+.calendars-wrapper {
+    position: relative;
+    min-height: 700px;
+}
+
 .calendar-container {
-    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
 }
 
 .calendar-container.active {
-    display: block;
+    position: relative;
+    opacity: 1;
+    pointer-events: auto;
 }
 
 .calendar-header {
