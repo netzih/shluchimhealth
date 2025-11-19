@@ -1354,6 +1354,11 @@ section h2::after {
         grid-template-columns: 1fr;
     }
 
+    .products-main,
+    .blog-main {
+        order: 1;
+    }
+
     .products-sidebar,
     .blog-sidebar {
         order: 2;
