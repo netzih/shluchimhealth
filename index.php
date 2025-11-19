@@ -128,18 +128,19 @@ include 'includes/header.php';
 
 <section class="info-section">
     <div class="container">
+        <h2>Why Choose Us</h2>
         <div class="info-grid">
             <div class="info-card">
-                <h3>🔍 Expert Reviews</h3>
-                <p>In-depth product reviews and comparisons to help you make informed decisions.</p>
+                <h3>Expert Reviews</h3>
+                <p>In-depth product analysis and comprehensive comparisons to help you make well-informed healthcare decisions.</p>
             </div>
             <div class="info-card">
-                <h3>💯 Trusted Recommendations</h3>
-                <p>We only recommend products we trust and believe in.</p>
+                <h3>Trusted Recommendations</h3>
+                <p>We thoroughly research and only recommend products we believe will genuinely benefit your health and wellness.</p>
             </div>
             <div class="info-card">
-                <h3>🛒 Multiple Options</h3>
-                <p>Compare prices and buy from your preferred retailer.</p>
+                <h3>Best Value</h3>
+                <p>Compare prices across multiple trusted retailers to find the best deals on quality health products.</p>
             </div>
         </div>
     </div>
