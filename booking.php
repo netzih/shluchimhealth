@@ -406,11 +406,8 @@ include 'includes/header.php';
 
 Cal("init", {origin:"https://cal.com"});
 
-// Track which calendars have been initialized
-let newClientInitialized = false;
-let followUpInitialized = false;
-
-// Initialize new client calendar on page load
+// Initialize both calendars on page load
+// Cal.com works better when calendars are initialized immediately, even if hidden
 Cal("inline", {
   elementOrSelector: "#cal-new-client",
   calLink: "<?php echo escape($calcomUsername); ?>/<?php echo escape($calcomNewClientEvent); ?>",
@@ -419,7 +416,15 @@ Cal("inline", {
     theme: "light"
   }
 });
-newClientInitialized = true;
+
+Cal("inline", {
+  elementOrSelector: "#cal-follow-up",
+  calLink: "<?php echo escape($calcomUsername); ?>/<?php echo escape($calcomFollowupEvent); ?>",
+  layout: "month_view",
+  config: {
+    theme: "light"
+  }
+});
 
 // Tab switching
 function switchTab(type) {
@@ -436,19 +441,6 @@ function switchTab(type) {
         document.getElementById('new-client-calendar').classList.add('active');
     } else {
         document.getElementById('follow-up-calendar').classList.add('active');
-
-        // Initialize follow-up calendar only when first accessed
-        if (!followUpInitialized) {
-            Cal("inline", {
-              elementOrSelector: "#cal-follow-up",
-              calLink: "<?php echo escape($calcomUsername); ?>/<?php echo escape($calcomFollowupEvent); ?>",
-              layout: "month_view",
-              config: {
-                theme: "light"
-              }
-            });
-            followUpInitialized = true;
-        }
     }
 }
 </script>
