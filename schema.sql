@@ -95,8 +95,9 @@ CREATE INDEX IF NOT EXISTS idx_product_urls_product_id ON product_urls(product_i
 CREATE INDEX IF NOT EXISTS idx_product_tags_product_id ON product_tags(product_id);
 
 -- Insert default admin user (username: admin, password: admin123 - CHANGE THIS!)
+-- Note: Password will be properly hashed when running reset-admin.php
 INSERT OR IGNORE INTO users (username, password, email, role)
-VALUES ('admin', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'admin@shluchimhealth.com', 'admin');
+VALUES ('admin', '', 'admin@shluchimhealth.com', 'admin');
 
 -- Insert default settings
 INSERT OR IGNORE INTO settings (setting_key, setting_value) VALUES
