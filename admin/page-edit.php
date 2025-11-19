@@ -128,8 +128,10 @@ tinymce.init({
         'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
         'insertdatetime', 'media', 'table', 'help', 'wordcount'
     ],
-    toolbar: 'undo redo | formatselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | removeformat | help',
-    content_style: 'body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; font-size: 16px; }'
+    toolbar: 'undo redo | formatselect | fontfamily fontsize | bold italic underline strikethrough | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | code | removeformat | help',
+    font_family_formats: 'System Default=-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; Arial=arial, helvetica, sans-serif; Courier New=courier new, courier, monospace; Georgia=georgia, palatino, serif; Times New Roman=times new roman, times, serif; Trebuchet MS=trebuchet ms, geneva, sans-serif; Verdana=verdana, geneva, sans-serif',
+    font_size_formats: '8px 10px 12px 14px 16px 18px 20px 24px 28px 32px 36px 48px 64px',
+    content_style: 'body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; font-size: 16px; line-height: 1.6; }'
 });
 </script>
 
