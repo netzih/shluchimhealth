@@ -41,6 +41,11 @@ if (php_sapi_name() !== 'cli') {
     ini_set('session.use_only_cookies', 1);
     ini_set('session.cookie_secure', isset($_SERVER['HTTPS']));
 
+    // Session timeout: 8 hours (28800 seconds)
+    // This gives you plenty of time to write blog posts without getting logged out
+    ini_set('session.gc_maxlifetime', 28800);
+    ini_set('session.cookie_lifetime', 28800);
+
     // Start session
     if (session_status() === PHP_SESSION_NONE) {
         session_start();
