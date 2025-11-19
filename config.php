@@ -12,10 +12,26 @@ if (php_sapi_name() === 'cli') {
     define('SITE_PATH', '');
     define('BASE_URL', SITE_URL);
 } else {
-    // Web request
+    // Web request - calculate base URL from config.php location
     $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
     define('SITE_URL', $protocol . '://' . $_SERVER['HTTP_HOST']);
-    define('SITE_PATH', dirname($_SERVER['SCRIPT_NAME']));
+
+    // Get the directory where config.php is located (application root)
+    $configDir = dirname($_SERVER['SCRIPT_FILENAME']);
+    $docRoot = $_SERVER['DOCUMENT_ROOT'];
+
+    // Find config.php relative to document root
+    $scriptPath = str_replace('\\', '/', $_SERVER['SCRIPT_FILENAME']);
+    $documentRoot = str_replace('\\', '/', $_SERVER['DOCUMENT_ROOT']);
+
+    // Get the directory of the currently executing script
+    $currentDir = dirname($scriptPath);
+
+    // Find config.php by going up from current location
+    $configPath = __DIR__;
+    $relativePath = str_replace($documentRoot, '', $configPath);
+
+    define('SITE_PATH', $relativePath);
     define('BASE_URL', SITE_URL . SITE_PATH);
 }
 
