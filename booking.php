@@ -75,32 +75,19 @@ include 'includes/header.php';
                         </button>
                     </div>
 
-                    <!-- Calendar Wrapper for positioning -->
+                    <!-- Calendar Wrapper -->
                     <div class="calendars-wrapper">
-                        <!-- New Client Calendar -->
-                        <div id="new-client-calendar" class="calendar-container active">
-                            <div class="calendar-header">
-                                <h3>New Client Consultation</h3>
-                                <p>Perfect for first-time clients ready to start their wellness journey</p>
-                            </div>
-                            <div
-                                class="cal-inline"
-                                id="cal-new-client"
-                                style="width:100%;height:600px;overflow:scroll">
-                            </div>
+                        <!-- Dynamic Calendar Header -->
+                        <div id="calendar-header" class="calendar-header">
+                            <h3 id="calendar-title">New Client Consultation</h3>
+                            <p id="calendar-description">Perfect for first-time clients ready to start their wellness journey</p>
                         </div>
 
-                        <!-- Follow-Up Calendar -->
-                        <div id="follow-up-calendar" class="calendar-container">
-                            <div class="calendar-header">
-                                <h3>Follow-Up Consultation</h3>
-                                <p>For returning clients to review progress and adjust recommendations</p>
-                            </div>
-                            <div
-                                class="cal-inline"
-                                id="cal-follow-up"
-                                style="width:100%;height:600px;overflow:scroll">
-                            </div>
+                        <!-- Single Calendar (switches content based on tab) -->
+                        <div
+                            class="cal-inline"
+                            id="cal-booking"
+                            style="width:100%;height:600px;overflow:scroll">
                         </div>
                     </div>
                 </div>
@@ -289,26 +276,16 @@ include 'includes/header.php';
     min-height: 700px;
 }
 
-.calendar-container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.3s ease;
-}
-
-.calendar-container.active {
-    position: relative;
-    opacity: 1;
-    pointer-events: auto;
-}
-
 .calendar-header {
     margin-bottom: 1.5rem;
     padding-bottom: 1rem;
     border-bottom: 2px solid #e2e8f0;
+    transition: opacity 0.3s ease;
+}
+
+.calendar-header h3,
+.calendar-header p {
+    transition: opacity 0.2s ease;
 }
 
 .calendar-header h3 {
@@ -420,60 +397,57 @@ include 'includes/header.php';
   };
 })(window, "https://app.cal.com/embed/embed.js", "init");
 
-// Initialize Cal.com with separate namespaces for each calendar
-console.log('Initializing Cal.com with namespaces...');
+Cal("init", {origin:"https://cal.com"});
 
-Cal("init", "newclient", {origin:"https://cal.com"});
-Cal("init", "followup", {origin:"https://cal.com"});
-
-// Track which calendars have been initialized
-let followUpInitialized = false;
-
-// Initialize new client calendar (default view) with namespace
-console.log('Initializing New Client calendar...');
-console.log('Cal.com link: <?php echo escape($calcomUsername); ?>/<?php echo escape($calcomNewClientEvent); ?>');
-
-Cal("inline", {
-  namespace: "newclient",
-  elementOrSelector: "#cal-new-client",
-  calLink: "<?php echo escape($calcomUsername); ?>/<?php echo escape($calcomNewClientEvent); ?>",
-  layout: "month_view",
-  config: {
-    theme: "light"
-  }
-});
-
-// Function to initialize follow-up calendar with namespace (lazy load)
-function initFollowUpCalendar() {
-    if (followUpInitialized) {
-        console.log('Follow-up calendar already initialized');
-        return;
+// Event type configuration
+const eventTypes = {
+    'new-client': {
+        link: '<?php echo escape($calcomUsername); ?>/<?php echo escape($calcomNewClientEvent); ?>',
+        title: 'New Client Consultation',
+        description: 'Perfect for first-time clients ready to start their wellness journey'
+    },
+    'follow-up': {
+        link: '<?php echo escape($calcomUsername); ?>/<?php echo escape($calcomFollowupEvent); ?>',
+        title: 'Follow-Up Consultation',
+        description: 'For returning clients to review progress and adjust recommendations'
     }
+};
 
-    console.log('Initializing Follow-up calendar...');
-    console.log('Cal.com link: <?php echo escape($calcomUsername); ?>/<?php echo escape($calcomFollowupEvent); ?>');
+let currentType = 'new-client';
 
-    // Make sure container is visible before initializing
-    const followUpContainer = document.getElementById('follow-up-calendar');
-    followUpContainer.style.position = 'relative';
-    followUpContainer.style.opacity = '1';
-    followUpContainer.style.pointerEvents = 'auto';
+// Function to load calendar for specific event type
+function loadCalendar(type) {
+    console.log('Loading calendar for:', type);
+    console.log('Cal.com link:', eventTypes[type].link);
 
-    Cal("inline", {
-      namespace: "followup",
-      elementOrSelector: "#cal-follow-up",
-      calLink: "<?php echo escape($calcomUsername); ?>/<?php echo escape($calcomFollowupEvent); ?>",
-      layout: "month_view",
-      config: {
-        theme: "light"
-      }
-    });
+    // Update header
+    document.getElementById('calendar-title').textContent = eventTypes[type].title;
+    document.getElementById('calendar-description').textContent = eventTypes[type].description;
 
-    followUpInitialized = true;
-    console.log('Follow-up calendar initialization complete');
+    // Clear the calendar container
+    const container = document.getElementById('cal-booking');
+    container.innerHTML = '';
+
+    // Small delay to ensure DOM is ready
+    setTimeout(function() {
+        // Initialize the calendar with new event type
+        Cal("inline", {
+            elementOrSelector: "#cal-booking",
+            calLink: eventTypes[type].link,
+            layout: "month_view",
+            config: {
+                theme: "light"
+            }
+        });
+        console.log('Calendar loaded successfully');
+    }, 100);
 }
 
-// Tab switching with lazy loading
+// Initialize with new client calendar by default
+console.log('Initializing booking calendar...');
+loadCalendar('new-client');
+
+// Tab switching
 function switchTab(type) {
     console.log('Switching to tab:', type);
 
@@ -482,34 +456,10 @@ function switchTab(type) {
     tabs.forEach(tab => tab.classList.remove('active'));
     event.target.closest('.booking-tab').classList.add('active');
 
-    // Update calendars
-    const newClient = document.getElementById('new-client-calendar');
-    const followUp = document.getElementById('follow-up-calendar');
-
-    if (type === 'new-client') {
-        newClient.classList.add('active');
-        followUp.classList.remove('active');
-        newClient.style.position = 'relative';
-        newClient.style.opacity = '1';
-        newClient.style.pointerEvents = 'auto';
-        followUp.style.position = 'absolute';
-        followUp.style.opacity = '0';
-        followUp.style.pointerEvents = 'none';
-    } else {
-        // Initialize follow-up calendar if this is first time showing it
-        if (!followUpInitialized) {
-            console.log('First time showing follow-up, initializing...');
-            initFollowUpCalendar();
-        }
-
-        followUp.classList.add('active');
-        newClient.classList.remove('active');
-        followUp.style.position = 'relative';
-        followUp.style.opacity = '1';
-        followUp.style.pointerEvents = 'auto';
-        newClient.style.position = 'absolute';
-        newClient.style.opacity = '0';
-        newClient.style.pointerEvents = 'none';
+    // Only reload if switching to a different type
+    if (type !== currentType) {
+        currentType = type;
+        loadCalendar(type);
     }
 }
 </script>
