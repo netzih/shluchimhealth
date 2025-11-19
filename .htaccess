@@ -21,6 +21,9 @@
     # Blog post pages: /blog/slug -> post.php?slug=slug
     RewriteRule ^blog/([a-zA-Z0-9-]+)/?$ post.php?slug=$1 [L,QSA]
 
+    # Booking page: /booking -> booking.php
+    RewriteRule ^booking/?$ booking.php [L,QSA]
+
     # Static pages: /slug -> page.php?slug=slug (catch-all for pages)
     # This must come AFTER specific routes and check file doesn't exist
     RewriteCond %{REQUEST_FILENAME} !-f

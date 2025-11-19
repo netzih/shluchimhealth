@@ -16,7 +16,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'products_per_page',
         'amazon_tag',
         'logo_url',
-        'tinymce_api_key'
+        'tinymce_api_key',
+        'calcom_username',
+        'calcom_event_type',
+        'enable_booking_widget'
     ];
 
     foreach ($settings as $key) {
@@ -92,6 +95,30 @@ include 'header.php';
                 <label for="amazon_tag">Amazon Associate Tag</label>
                 <input type="text" id="amazon_tag" name="amazon_tag" value="<?php echo escape(getSetting('amazon_tag')); ?>" class="form-control">
                 <small>Your Amazon Associates tracking ID</small>
+            </div>
+        </div>
+
+        <div class="settings-section">
+            <h2>Booking & Appointments</h2>
+
+            <div class="form-group">
+                <label for="calcom_username">Cal.com Username</label>
+                <input type="text" id="calcom_username" name="calcom_username" value="<?php echo escape(getSetting('calcom_username')); ?>" class="form-control" placeholder="yourusername">
+                <small>Your Cal.com username (e.g., "john" from cal.com/john)</small>
+            </div>
+
+            <div class="form-group">
+                <label for="calcom_event_type">Cal.com Event Type</label>
+                <input type="text" id="calcom_event_type" name="calcom_event_type" value="<?php echo escape(getSetting('calcom_event_type')); ?>" class="form-control" placeholder="30min">
+                <small>Your event slug (e.g., "30min", "consultation", "follow-up")</small>
+            </div>
+
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" name="enable_booking_widget" value="1" <?php echo getSetting('enable_booking_widget') ? 'checked' : ''; ?>>
+                    Enable Floating Booking Button
+                </label>
+                <small>Show a floating "Book Consultation" button on all pages</small>
             </div>
         </div>
 

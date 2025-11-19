@@ -52,6 +52,82 @@
         </div>
     </footer>
 
+    <?php if (getSetting('enable_booking_widget') && getSetting('calcom_username')): ?>
+    <!-- Floating Booking Button -->
+    <div class="floating-booking-btn">
+        <button onclick="openBookingModal()" class="booking-fab">
+            <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+            </svg>
+            <span>Book Now</span>
+        </button>
+    </div>
+
+    <style>
+    .floating-booking-btn {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        z-index: 1000;
+    }
+
+    .booking-fab {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 1rem 1.5rem;
+        background: #2563eb;
+        color: white;
+        border: none;
+        border-radius: 50px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+        transition: all 0.3s ease;
+    }
+
+    .booking-fab:hover {
+        background: #1d4ed8;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(37, 99, 235, 0.5);
+    }
+
+    .booking-fab svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    @media (max-width: 768px) {
+        .floating-booking-btn {
+            bottom: 20px;
+            right: 20px;
+        }
+
+        .booking-fab span {
+            display: none;
+        }
+
+        .booking-fab {
+            width: 56px;
+            height: 56px;
+            padding: 0;
+            justify-content: center;
+            border-radius: 50%;
+        }
+    }
+    </style>
+
+    <script>
+    function openBookingModal() {
+        window.location.href = '<?php echo BASE_URL; ?>/booking';
+    }
+    </script>
+    <?php endif; ?>
+
     <script src="<?php echo BASE_URL; ?>/assets/js/main.js"></script>
 </body>
 </html>
