@@ -4,7 +4,7 @@ require_once 'database.php';
 require_once 'functions.php';
 
 // DEBUG MODE - Remove this block when fixed
-$debugMode = true;
+$debugMode = false;
 if ($debugMode) {
     echo "<div style='background: #ffeb3b; padding: 20px; border: 3px solid #f00; margin: 20px;'>";
     echo "<h2>🔍 PAGE.PHP DEBUG</h2>";

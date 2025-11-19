@@ -22,9 +22,9 @@
                     <ul class="footer-links">
                         <?php
                         $footerPages = db()->fetchAll("SELECT * FROM pages WHERE slug IN ('privacy-policy', 'affiliate-disclosure', 'terms-of-service') ORDER BY title ASC");
-                        foreach ($footerPages as $page):
+                        foreach ($footerPages as $footerPage):
                         ?>
-                            <li><a href="<?php echo BASE_URL; ?>/<?php echo $page['slug']; ?>"><?php echo escape($page['title']); ?></a></li>
+                            <li><a href="<?php echo BASE_URL; ?>/<?php echo $footerPage['slug']; ?>"><?php echo escape($footerPage['title']); ?></a></li>
                         <?php endforeach; ?>
                     </ul>
                 </div>
