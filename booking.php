@@ -422,8 +422,13 @@ include 'includes/header.php';
 
 Cal("init", {origin:"https://cal.com"});
 
+// Make both calendars temporarily visible for initialization
+document.getElementById('new-client-calendar').style.position = 'relative';
+document.getElementById('new-client-calendar').style.opacity = '1';
+document.getElementById('follow-up-calendar').style.position = 'relative';
+document.getElementById('follow-up-calendar').style.opacity = '1';
+
 // Initialize both calendars on page load
-// Cal.com works better when calendars are initialized immediately, even if hidden
 Cal("inline", {
   elementOrSelector: "#cal-new-client",
   calLink: "<?php echo escape($calcomUsername); ?>/<?php echo escape($calcomNewClientEvent); ?>",
@@ -442,6 +447,14 @@ Cal("inline", {
   }
 });
 
+// After calendars initialize, hide the follow-up one
+setTimeout(function() {
+    // Hide follow-up calendar (new client is default)
+    const followUp = document.getElementById('follow-up-calendar');
+    followUp.style.position = 'absolute';
+    followUp.style.opacity = '0';
+}, 1000);
+
 // Tab switching
 function switchTab(type) {
     // Update tabs
@@ -450,13 +463,27 @@ function switchTab(type) {
     event.target.closest('.booking-tab').classList.add('active');
 
     // Update calendars
-    document.getElementById('new-client-calendar').classList.remove('active');
-    document.getElementById('follow-up-calendar').classList.remove('active');
+    const newClient = document.getElementById('new-client-calendar');
+    const followUp = document.getElementById('follow-up-calendar');
 
     if (type === 'new-client') {
-        document.getElementById('new-client-calendar').classList.add('active');
+        newClient.classList.add('active');
+        followUp.classList.remove('active');
+        newClient.style.position = 'relative';
+        newClient.style.opacity = '1';
+        newClient.style.pointerEvents = 'auto';
+        followUp.style.position = 'absolute';
+        followUp.style.opacity = '0';
+        followUp.style.pointerEvents = 'none';
     } else {
-        document.getElementById('follow-up-calendar').classList.add('active');
+        followUp.classList.add('active');
+        newClient.classList.remove('active');
+        followUp.style.position = 'relative';
+        followUp.style.opacity = '1';
+        followUp.style.pointerEvents = 'auto';
+        newClient.style.position = 'absolute';
+        newClient.style.opacity = '0';
+        newClient.style.pointerEvents = 'none';
     }
 }
 </script>
