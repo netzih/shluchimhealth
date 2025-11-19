@@ -571,7 +571,7 @@ textarea.form-control {
 
 @media (max-width: 768px) {
     .admin-body {
-        grid-template-columns: 1fr;
+        padding-left: 0; /* Remove sidebar padding on mobile */
     }
 
     .admin-nav {
@@ -580,7 +580,7 @@ textarea.form-control {
     }
 
     .admin-content {
-        margin-left: 0;
+        /* Content takes full width on mobile */
     }
 
     .stats-grid {
