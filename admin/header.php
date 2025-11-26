@@ -5,10 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo isset($pageTitle) ? escape($pageTitle) . ' - ' : ''; ?>Admin - <?php echo escape(getSetting('site_name')); ?></title>
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>/assets/css/admin.css">
-    <?php
-    $tinymceKey = getSetting('tinymce_api_key') ?: 'no-api-key';
-    ?>
-    <script src="https://cdn.tiny.cloud/1/<?php echo escape($tinymceKey); ?>/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <!-- Jodit Editor -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jodit@4/es2021/jodit.min.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/jodit@4/es2021/jodit.min.js"></script>
 </head>
 <body class="admin-body">
     <nav class="admin-nav">

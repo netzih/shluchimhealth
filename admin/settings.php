@@ -16,7 +16,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'products_per_page',
         'amazon_tag',
         'logo_url',
-        'tinymce_api_key',
         'calcom_username',
         'calcom_event_type',
         'calcom_followup_event_type',
@@ -126,16 +125,6 @@ include 'header.php';
                     Enable Floating Booking Button
                 </label>
                 <small>Show a floating "Book Consultation" button on all pages</small>
-            </div>
-        </div>
-
-        <div class="settings-section">
-            <h2>Editor Settings</h2>
-
-            <div class="form-group">
-                <label for="tinymce_api_key">TinyMCE API Key</label>
-                <input type="text" id="tinymce_api_key" name="tinymce_api_key" value="<?php echo escape(getSetting('tinymce_api_key')); ?>" class="form-control">
-                <small>Get your free API key at <a href="https://www.tiny.cloud/auth/signup/" target="_blank">tiny.cloud/signup</a></small>
             </div>
         </div>
 

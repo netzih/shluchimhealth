@@ -7,7 +7,7 @@ A professional, Amazon Associates-compliant PHP website for health and wellness 
 ### ✨ Key Features
 - **Amazon Associates Compliant**: Built to meet Amazon's program requirements
 - **Multiple Affiliate Sources**: Support for Amazon, iHerb, and direct manufacturer links
-- **Admin Panel**: Full-featured admin with WYSIWYG editor (TinyMCE)
+- **Admin Panel**: Full-featured admin with WYSIWYG editor (Jodit)
 - **Blog System**: SEO-optimized blog for high-quality content
 - **Product Management**: Import and manage products from JSON
 - **Responsive Design**: Mobile-friendly, modern interface
@@ -17,7 +17,7 @@ A professional, Amazon Associates-compliant PHP website for health and wellness 
 ### 🛠️ Tech Stack
 - **Backend**: PHP 7.4+ with SQLite database
 - **Frontend**: Vanilla JavaScript, modern CSS3
-- **Admin**: TinyMCE WYSIWYG editor
+- **Admin**: Jodit WYSIWYG editor (open-source, no API key required)
 - **Server**: Apache with mod_rewrite
 
 ## Installation
@@ -321,7 +321,7 @@ This project is provided as-is for use with your affiliate marketing business.
 ## Credits
 
 Built for Shluchim Health
-Powered by PHP, SQLite, and TinyMCE
+Powered by PHP, SQLite, and Jodit
 
 ---
 

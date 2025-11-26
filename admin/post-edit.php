@@ -153,20 +153,42 @@ include 'header.php';
 </div>
 
 <script>
-// Initialize TinyMCE
-tinymce.init({
-    selector: '.wysiwyg',
+// Initialize Jodit Editor
+const editor = Jodit.make('.wysiwyg', {
     height: 500,
-    menubar: false,
-    plugins: [
-        'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
-        'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
-        'insertdatetime', 'media', 'table', 'help', 'wordcount'
+    toolbarAdaptive: false,
+    buttons: [
+        'source', '|',
+        'bold', 'italic', 'underline', 'strikethrough', '|',
+        'ul', 'ol', '|',
+        'outdent', 'indent', '|',
+        'font', 'fontsize', 'brush', 'paragraph', '|',
+        'image', 'link', 'table', '|',
+        'align', 'undo', 'redo', '|',
+        'hr', 'eraser', 'fullsize'
     ],
-    toolbar: 'undo redo | formatselect | fontfamily fontsize | bold italic underline strikethrough | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | code | removeformat | help',
-    font_family_formats: 'System Default=-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; Arial=arial, helvetica, sans-serif; Courier New=courier new, courier, monospace; Georgia=georgia, palatino, serif; Times New Roman=times new roman, times, serif; Trebuchet MS=trebuchet ms, geneva, sans-serif; Verdana=verdana, geneva, sans-serif',
-    font_size_formats: '8px 10px 12px 14px 16px 18px 20px 24px 28px 32px 36px 48px 64px',
-    content_style: 'body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; font-size: 16px; line-height: 1.6; }'
+    removeButtons: ['about'],
+    askBeforePasteHTML: false,
+    askBeforePasteFromWord: false,
+    defaultActionOnPaste: 'insert_clear_html',
+    enter: 'P',
+    defaultMode: Jodit.MODE_WYSIWYG,
+    uploader: {
+        insertImageAsBase64URI: true
+    },
+    controls: {
+        font: {
+            list: {
+                'System Default': '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+                'Arial': 'Arial, Helvetica, sans-serif',
+                'Georgia': 'Georgia, serif',
+                'Impact': 'Impact, Charcoal, sans-serif',
+                'Tahoma': 'Tahoma, Geneva, sans-serif',
+                'Times New Roman': '"Times New Roman", Times, serif',
+                'Verdana': 'Verdana, Geneva, sans-serif'
+            }
+        }
+    }
 });
 </script>
 
