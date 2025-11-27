@@ -65,7 +65,11 @@ include '../includes/header.php';
 
                     <h2><a href="<?php echo BASE_URL; ?>/blog/<?php echo $featuredPost['slug']; ?>"><?php echo escape($featuredPost['title']); ?></a></h2>
 
-                    <p class="post-excerpt"><?php echo escape($featuredPost['excerpt'] ?: getExcerpt($featuredPost['content'], 250)); ?></p>
+                    <p class="post-excerpt"><?php
+                        $excerpt = $featuredPost['excerpt'] ?: getExcerpt($featuredPost['content'], 250);
+                        $excerpt = html_entity_decode($excerpt, ENT_QUOTES, 'UTF-8');
+                        echo escape($excerpt);
+                    ?></p>
 
                     <div class="post-meta">
                         <span>By <?php echo escape($featuredPost['author']); ?></span>
@@ -103,7 +107,11 @@ include '../includes/header.php';
 
                                     <h3><a href="<?php echo BASE_URL; ?>/blog/<?php echo $post['slug']; ?>"><?php echo escape($post['title']); ?></a></h3>
 
-                                    <p class="post-excerpt"><?php echo escape($post['excerpt'] ?: getExcerpt($post['content'])); ?></p>
+                                    <p class="post-excerpt"><?php
+                                        $excerpt = $post['excerpt'] ?: getExcerpt($post['content']);
+                                        $excerpt = html_entity_decode($excerpt, ENT_QUOTES, 'UTF-8');
+                                        echo escape($excerpt);
+                                    ?></p>
 
                                     <div class="post-meta">
                                         <span><?php echo formatDate($post['published_at']); ?></span>

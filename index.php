@@ -108,7 +108,11 @@ include 'includes/header.php';
 
                         <h3><a href="<?php echo BASE_URL; ?>/blog/<?php echo $post['slug']; ?>"><?php echo escape($post['title']); ?></a></h3>
 
-                        <p class="post-excerpt"><?php echo escape($post['excerpt'] ?: getExcerpt($post['content'])); ?></p>
+                        <p class="post-excerpt"><?php
+                            $excerpt = $post['excerpt'] ?: getExcerpt($post['content']);
+                            $excerpt = html_entity_decode($excerpt, ENT_QUOTES, 'UTF-8');
+                            echo escape($excerpt);
+                        ?></p>
 
                         <div class="post-meta">
                             <span><?php echo formatDate($post['published_at']); ?></span>
