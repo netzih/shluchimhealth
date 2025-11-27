@@ -107,16 +107,14 @@
             right: 20px;
         }
 
-        .booking-fab span {
-            display: none;
+        .booking-fab {
+            padding: 0.75rem 1rem;
+            font-size: 0.875rem;
         }
 
-        .booking-fab {
-            width: 56px;
-            height: 56px;
-            padding: 0;
-            justify-content: center;
-            border-radius: 50%;
+        .booking-fab svg {
+            width: 18px;
+            height: 18px;
         }
     }
     </style>
