@@ -145,6 +145,7 @@ function truncate($text, $length = 150, $suffix = '...') {
  */
 function getExcerpt($content, $length = 200) {
     $content = strip_tags($content);
+    $content = html_entity_decode($content, ENT_QUOTES, 'UTF-8');
     return truncate($content, $length);
 }
 
