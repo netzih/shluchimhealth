@@ -59,10 +59,10 @@ if (!empty($urls)) {
     echo "✓ No matches in product_urls table\n\n";
 }
 
-// Search products table (description, content fields)
+// Search products table (description field)
 $products = db()->fetchAll(
     'SELECT id, title, slug FROM products
-     WHERE description LIKE :search OR content LIKE :search',
+     WHERE description LIKE :search',
     ['search' => '%' . $searchTag . '%']
 );
 
@@ -99,7 +99,7 @@ if (!empty($posts)) {
 
 // Search settings table
 $settings = db()->fetchAll(
-    'SELECT key, value FROM settings WHERE value LIKE :search',
+    'SELECT setting_key, setting_value FROM settings WHERE setting_value LIKE :search',
     ['search' => '%' . $searchTag . '%']
 );
 
@@ -107,8 +107,8 @@ if (!empty($settings)) {
     echo "Found in settings table:\n";
     foreach ($settings as $setting) {
         $foundCount++;
-        echo "  • Setting: {$setting['key']}\n";
-        echo "    Value: {$setting['value']}\n\n";
+        echo "  • Setting: {$setting['setting_key']}\n";
+        echo "    Value: {$setting['setting_value']}\n\n";
     }
 } else {
     echo "✓ No matches in settings table\n\n";
