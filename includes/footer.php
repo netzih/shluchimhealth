@@ -48,6 +48,11 @@
                     <strong>Affiliate Disclosure:</strong> As an Amazon Associate I earn from qualifying purchases.
                     This site may receive commissions from purchases made through links on this site, at no extra cost to you.
                 </p>
+                <p class="disclaimer" style="margin-top: 1rem; font-size: 0.9rem; color: #666;">
+                    <strong>⚕️ Medical Disclaimer:</strong> The information on this website is for educational purposes only and is not intended as medical advice, diagnosis, or treatment.
+                    Always consult a qualified healthcare professional before starting any supplement regimen or making changes to your health routine.
+                    Individual results may vary.
+                </p>
             </div>
         </div>
     </footer>
