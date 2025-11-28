@@ -18,44 +18,25 @@ if (php_sapi_name() !== 'cli') {
 }
 
 echo "====================================\n";
-echo "Amazon Short Links Finder\n";
+echo "Amazon Short Links Finder (amzn.to)\n";
 echo "====================================\n\n";
 
-// Fetch all product URLs that might be Amazon short links
-$shortLinkPatterns = [
-    '%amzn.to%',
-    '%a.co%',
-    '%amzn.com%',
-    '%amazon.com/dp/%',
-    '%amazon.com/gp/product/%'
-];
-
-$allShortLinks = [];
-
-foreach ($shortLinkPatterns as $pattern) {
-    $urls = db()->fetchAll(
-        'SELECT pu.id, pu.product_id, pu.name, pu.url, p.title as product_title
-         FROM product_urls pu
-         JOIN products p ON pu.product_id = p.id
-         WHERE pu.url LIKE :pattern
-         ORDER BY p.title, pu.display_order',
-        ['pattern' => $pattern]
-    );
-
-    foreach ($urls as $url) {
-        // Avoid duplicates
-        if (!isset($allShortLinks[$url['id']])) {
-            $allShortLinks[$url['id']] = $url;
-        }
-    }
-}
+// Fetch all product URLs that are amzn.to short links
+$allShortLinks = db()->fetchAll(
+    'SELECT pu.id, pu.product_id, pu.name, pu.url, p.title as product_title, p.slug as product_slug
+     FROM product_urls pu
+     JOIN products p ON pu.product_id = p.id
+     WHERE pu.url LIKE :pattern
+     ORDER BY p.title, pu.display_order',
+    ['pattern' => '%amzn.to%']
+);
 
 if (empty($allShortLinks)) {
-    echo "No Amazon short links found.\n";
+    echo "No amzn.to short links found.\n";
     exit(0);
 }
 
-echo "Found " . count($allShortLinks) . " Amazon short link(s):\n\n";
+echo "Found " . count($allShortLinks) . " amzn.to short link(s) that need manual updating:\n\n";
 echo str_repeat("=", 80) . "\n\n";
 
 $currentProduct = null;
@@ -69,26 +50,15 @@ foreach ($allShortLinks as $urlRecord) {
         }
         $currentProduct = $urlRecord['product_id'];
         echo "Product: {$urlRecord['product_title']}\n";
-        echo "Product ID: {$urlRecord['product_id']}\n\n";
+        echo "Product ID: {$urlRecord['product_id']}\n";
+        echo "Product Slug: {$urlRecord['product_slug']}\n";
+        echo "Edit URL: " . SITE_URL . "/admin/product-edit.php?id={$urlRecord['product_id']}\n\n";
     }
 
     $linkCount++;
 
-    // Determine link type
-    $linkType = 'Unknown';
-    if (stripos($urlRecord['url'], 'amzn.to') !== false) {
-        $linkType = 'amzn.to (Short Link)';
-    } elseif (stripos($urlRecord['url'], 'a.co') !== false) {
-        $linkType = 'a.co (Short Link)';
-    } elseif (stripos($urlRecord['url'], '/dp/') !== false) {
-        $linkType = 'Direct Product Link (/dp/)';
-    } elseif (stripos($urlRecord['url'], '/gp/product/') !== false) {
-        $linkType = 'Product Link (/gp/product/)';
-    }
-
     echo "  [{$linkCount}] Link Name: {$urlRecord['name']}\n";
-    echo "      Type: $linkType\n";
-    echo "      URL: {$urlRecord['url']}\n";
+    echo "      Short URL: {$urlRecord['url']}\n";
     echo "      Link ID: {$urlRecord['id']}\n\n";
 }
 
@@ -96,10 +66,14 @@ echo str_repeat("=", 80) . "\n\n";
 
 echo "Summary:\n";
 echo "--------\n";
-echo "Total short/special links found: " . count($allShortLinks) . "\n\n";
+echo "Total amzn.to short links found: " . count($allShortLinks) . "\n\n";
 
-echo "To update these links:\n";
-echo "1. Expand each short link to get the full Amazon URL with your affiliate tag\n";
-echo "2. Update in admin panel: /admin/product-edit.php?id=<product_id>\n";
-echo "3. Or update directly in database:\n";
-echo "   UPDATE product_urls SET url = 'NEW_URL' WHERE id = <link_id>;\n\n";
+echo "How to update these short links:\n";
+echo "1. Visit each amzn.to URL in your browser to expand it to full Amazon URL\n";
+echo "2. Add your affiliate tag to the expanded URL: ?tag=shluchimhea07-20\n";
+echo "3. Update via admin panel using the 'Edit URL' links above\n";
+echo "4. Or update directly in database:\n";
+echo "   UPDATE product_urls SET url = 'FULL_AMAZON_URL?tag=shluchimhea07-20' WHERE id = <link_id>;\n\n";
+
+echo "Note: amzn.to links cannot have affiliate tags added directly.\n";
+echo "They must be expanded to full amazon.com URLs first.\n";
