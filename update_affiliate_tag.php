@@ -68,7 +68,7 @@ foreach ($urls as $urlRecord) {
         // If URL was changed
         if ($newUrl !== $originalUrl) {
             // Update in database
-            db()->execute(
+            db()->query(
                 'UPDATE product_urls SET url = :url WHERE id = :id',
                 ['url' => $newUrl, 'id' => $urlRecord['id']]
             );
