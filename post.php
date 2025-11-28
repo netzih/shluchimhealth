@@ -124,12 +124,6 @@ include 'includes/header.php';
         <?php endif; ?>
 
         <footer class="post-footer">
-            <p class="affiliate-disclaimer">
-                <strong>Affiliate Disclosure:</strong> This post may contain affiliate links.
-                If you click through and make a purchase, we may earn a commission at no additional cost to you.
-                We only recommend products we genuinely believe in.
-            </p>
-
             <div class="post-share">
                 <p>Share this post:</p>
                 <div class="share-buttons">
