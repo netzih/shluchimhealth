@@ -72,14 +72,203 @@ include 'includes/header.php';
             <a href="<?php echo BASE_URL; ?>/">Home</a> / <span><?php echo escape($page['title']); ?></span>
         </div>
 
-        <article>
-            <h1><?php echo escape($page['title']); ?></h1>
-
+        <article class="page-article">
             <div class="page-content">
                 <?php echo $page['content']; ?>
             </div>
         </article>
     </div>
 </div>
+
+<style>
+.page-single {
+    padding: 3rem 0;
+    min-height: 60vh;
+}
+
+.page-article {
+    max-width: 900px;
+    margin: 0 auto;
+    background: white;
+    padding: 3rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.page-content {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: #333;
+}
+
+.page-content h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: var(--dark-color);
+    line-height: 1.2;
+    font-weight: 700;
+}
+
+.page-content h2 {
+    font-size: 1.75rem;
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+    color: var(--dark-color);
+    font-weight: 600;
+    border-bottom: 2px solid var(--primary-color);
+    padding-bottom: 0.5rem;
+}
+
+.page-content h3 {
+    font-size: 1.35rem;
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+    color: var(--dark-color);
+    font-weight: 600;
+}
+
+.page-content h4 {
+    font-size: 1.15rem;
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--dark-color);
+    font-weight: 600;
+}
+
+.page-content p {
+    margin-bottom: 1.25rem;
+}
+
+.page-content ul,
+.page-content ol {
+    margin: 1.25rem 0;
+    padding-left: 2rem;
+}
+
+.page-content li {
+    margin-bottom: 0.75rem;
+    line-height: 1.7;
+}
+
+.page-content ul li {
+    list-style-type: disc;
+}
+
+.page-content ol li {
+    list-style-type: decimal;
+}
+
+.page-content strong {
+    font-weight: 600;
+    color: var(--dark-color);
+}
+
+.page-content a {
+    color: var(--primary-color);
+    text-decoration: underline;
+    transition: color 0.2s;
+}
+
+.page-content a:hover {
+    color: var(--secondary-color);
+}
+
+.page-content blockquote {
+    border-left: 4px solid var(--primary-color);
+    padding: 1rem 1.5rem;
+    margin: 1.5rem 0;
+    background: #f8f9fa;
+    font-style: italic;
+    color: #555;
+}
+
+.page-content code {
+    background: #f4f4f4;
+    padding: 0.2rem 0.4rem;
+    border-radius: 3px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9em;
+    color: #d63384;
+}
+
+.page-content pre {
+    background: #f4f4f4;
+    padding: 1rem;
+    border-radius: 6px;
+    overflow-x: auto;
+    margin: 1.5rem 0;
+}
+
+.page-content pre code {
+    background: none;
+    padding: 0;
+    color: inherit;
+}
+
+.page-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5rem 0;
+}
+
+.page-content table th,
+.page-content table td {
+    border: 1px solid #ddd;
+    padding: 0.75rem;
+    text-align: left;
+}
+
+.page-content table th {
+    background: #f8f9fa;
+    font-weight: 600;
+    color: var(--dark-color);
+}
+
+.page-content table tr:nth-child(even) {
+    background: #f8f9fa;
+}
+
+.page-content hr {
+    border: none;
+    border-top: 2px solid #e0e0e0;
+    margin: 2.5rem 0;
+}
+
+/* Highlighted boxes */
+.page-content div[style*="background"] {
+    border-radius: 8px;
+    margin: 1.5rem 0;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .page-single {
+        padding: 2rem 0;
+    }
+
+    .page-article {
+        padding: 2rem 1.5rem;
+        border-radius: 0;
+        box-shadow: none;
+    }
+
+    .page-content {
+        font-size: 1rem;
+    }
+
+    .page-content h1 {
+        font-size: 2rem;
+    }
+
+    .page-content h2 {
+        font-size: 1.5rem;
+        margin-top: 2rem;
+    }
+
+    .page-content h3 {
+        font-size: 1.25rem;
+    }
+}
+</style>
 
 <?php include 'includes/footer.php'; ?>
