@@ -84,13 +84,13 @@ include 'includes/header.php';
                                 <span class="btn-icon">🛒</span>
                                 <span class="btn-text">
                                     <strong>Buy on <?php echo escape($url['name']); ?></strong>
-                                    <small>Visit retailer</small>
+                                    <small>Paid link - Visit retailer</small>
                                 </span>
                             </a>
                         <?php endforeach; ?>
                     </div>
                     <p class="affiliate-note">
-                        <small>💡 We may earn a commission if you make a purchase through our links, at no extra cost to you.</small>
+                        <small>💡 As an Amazon Associate I earn from qualifying purchases. Purchasing through our links supports this site at no extra cost to you.</small>
                     </p>
                 </div>
             </div>

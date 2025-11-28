@@ -45,8 +45,8 @@
             <div class="footer-bottom">
                 <p>&copy; <?php echo date('Y'); ?> <?php echo escape(getSetting('site_name')); ?>. All rights reserved.</p>
                 <p class="disclaimer">
-                    <strong>Affiliate Disclosure:</strong> As an Amazon Associate, we earn from qualifying purchases.
-                    We may receive commissions from purchases made through links on this site.
+                    <strong>Affiliate Disclosure:</strong> As an Amazon Associate I earn from qualifying purchases.
+                    This site may receive commissions from purchases made through links on this site, at no extra cost to you.
                 </p>
             </div>
         </div>

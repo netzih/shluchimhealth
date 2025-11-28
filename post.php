@@ -72,6 +72,14 @@ include 'includes/header.php';
             </div>
         <?php endif; ?>
 
+        <div class="affiliate-disclosure-box" style="background: #f0f7ff; border-left: 4px solid #2563eb; padding: 1.5rem; margin: 2rem 0; border-radius: 8px;">
+            <p style="margin: 0; font-size: 0.95rem; color: #1e40af;">
+                <strong>📢 Affiliate Disclosure:</strong> As an Amazon Associate I earn from qualifying purchases.
+                This post may contain affiliate links, meaning we earn a commission if you make a purchase through our links, at no extra cost to you.
+                We only recommend products we genuinely believe will benefit your health and wellness.
+            </p>
+        </div>
+
         <div class="post-content">
             <?php echo $post['content']; ?>
         </div>
